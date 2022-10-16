@@ -1,6 +1,8 @@
----
 
-- name: Installing package
-  package:
-    name: "{{ cron_package }}"
-    state: present
+- block:
+  - name: package > install cron packages
+    ansible.builtin.package:
+      name: "{{ cron.packages }}"
+      state: present
+
+  tags: cron_install

@@ -1,30 +1,7 @@
----
-# cron_tasks:
-#   - name: ...
-#     cron_file: ...
-#     day: ...
-#     hour: ...
-#     job: ...
-#     minute: ...
-#     month: ...
-#     special_time: ...
-#     state: ...
-#     user: ...
-#     weekday: ...
-#
 
-# list of cron entries (@see http://docs.ansible.com/cron_module.html)
-cron_tasks: []
-# start on boot
-cron_service_enabled: yes
-# current state: started, stopped
-cron_service_state: started
-#
-# refer to the `cronvar Ansible module documentation <https://docs.ansible.com/ansible/cronvar_module.html>`_ for details.
-#
-# cron_vars:
-#   - name: 'PATH'
-#     value: '/usr/bin:/bin:/usr/local/bin'
-#     user: 'root'
-#
-cron_vars: []
+default_cron:
+  service_enabled: yes
+  service_state:   started
+  shell:           /bin/bash                        # the shell to use for running cronjobs
+  path:            /sbin:/bin:/usr/sbin:/usr/bin    # the path to set for running jobs
+  mailto:          root                             # the address where mails should be sent to

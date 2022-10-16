@@ -1,134 +1,16 @@
 
 - block:
-  - include_tasks: "{{ ansible_os_family }}.yml"
-
-  - name: cron > insert crons
-    cron:
-      name:       "{{ item.name }}"
-      user:       "{{ item.user }}"
-      job:        "{{ item.job }}"
-      minute:     "{{ item.minute | default('*') }}"
-      hour:       "{{ item.hour | default('*') }}"
-      day:        "{{ item.day | default('*') }}"
-      month:      "{{ item.month | default('*') }}"
-      weekday:    "{{ item.weekday | default('*') }}"
-      disabled:   "{{ item.disabled | default('no') }}"
-      state:      "{{ item.state | default('present') }}"
-      cron_file:  "{{ item.cron_file | default('ecritel') }}"
-    loop: "{{ cron_list }}"
-    loop_control:
-      label: "{{ item.name }}"
-    when:
-      - cron_list is defined
-      - cron_list | length > 0
-
-  - name: template > copy needed script files
-    template:
-      src:    "{{ item.src }}.j2"
-      dest:   "/{{ item.dest }}"
-      owner:  "{{ item.owner | default('root') }}"
-      group:  "{{ item.group | default('root') }}"
-      mode:   "{{ item.mode  | default('0750') }}"
-    loop: "{{ cron_files }}"
-    when:
-      - cron_files is defined
-      - cron_files | length > 0
-
-  # buluma/ansible-role-cron
-  - import_tasks: vars.yml
-    tags:
-      - system
-      - cron
-      - vars
-      - cron-vars
-
-  - import_tasks: install.yml
-    tags:
-      - system
-      - cron
-      - install
-      - cron-install
-
-  - import_tasks: config.yml
-    tags:
-      - system
-      - cron
-      - config
-      - cron-config
-
-  - import_tasks: service.yml
-    tags:
-      - system
-      - cron
-      - service
-      - cron-service
-
-
-  # robertdebock/ansible-role-cron
-  - name: Import assert.yml
+  - name: import_task > assert.yml
     ansible.builtin.import_tasks: assert.yml
     run_once: yes
     delegate_to: localhost
 
-  - name: Install cron
-    ansible.builtin.package:
-      name: "{{ cron_packages }}"
-      state: present
+  - import_tasks: install.yml
 
-  - name: Configure shell
-    ansible.builtin.lineinfile:
-      path: "{{ cron_configuration }}"
-      line: "SHELL={{ cron_shell }}"
-      regexp: "^SHELL"
-      create: yes
-      mode: "0600"
-    notify:
-      - Restart cron
+  - import_tasks: config.yml
 
-  - name: Configure path
-    ansible.builtin.lineinfile:
-      path: "{{ cron_configuration }}"
-      line: "PATH={{ cron_path }}"
-      regexp: "^PATH"
-      create: yes
-      mode: "0600"
-    notify:
-      - Restart cron
+  - import_tasks: service.yml
 
-  - name: Configure mailto
-    ansible.builtin.lineinfile:
-      path: "{{ cron_configuration }}"
-      line: "MAILTO={{ cron_mailto }}"
-      regexp: "^MAILTO"
-      create: yes
-      mode: "0600"
-    notify:
-      - Restart cron
-
-  - name: Start and enable cron
-    ansible.builtin.service:
-      name: "{{ cron_service }}"
-      state: started
-      enabled: yes
-    when:
-      - cron_service is defined
-      - cron_service | length
-
-  - name: Schedule requested cron jobs
-    ansible.builtin.cron:
-      name: "{{ item.name }}"
-      minute: "{{ item.minute | default(omit) }}"
-      hour: "{{ item.hour | default(omit) }}"
-      day: "{{ item.day | default(omit) }}"
-      month: "{{ item.month | default(omit) }}"
-      weekday: "{{ item.weekday | default(omit) }}"
-      job: "{{ item.job }}"
-      state: "{{ item.state | default('present') }}"
-      user: "{{ item.user | default(omit) }}"
-    loop: "{{ cron_jobs }}"
-    loop_control:
-      label: "{{ item.name }}"
-    when:
-      - cron_jobs is defined
+  - import_tasks: cron_jobs.yml
 
   tags: cron

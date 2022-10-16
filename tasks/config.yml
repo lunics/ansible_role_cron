@@ -1,28 +1,34 @@
----
 
-- name: Configuring cron tasks
-  cron:
-    cron_file: "{{ item.cron_file | default(omit) }}"
-    day: "{{ item.day | default(omit) }}"
-    hour: "{{ item.hour | default(omit) }}"
-    job: "{{ item.job | default(omit) }}"
-    minute: "{{ item.minute | default(omit) }}"
-    month: "{{ item.month | default(omit) }}"
-    name: "{{ item.name | default(item) }}"
-    special_time: "{{ item.special_time | default(omit) }}"
-    state: "{{ item.state | default(omit) }}"
-    user: "{{ item.user | default(omit) }}"
-    weekday: "{{ item.weekday | default(omit) }}"
-  with_items: "{{ cron_tasks }}"
+- block:
+## remplacer par un template
+  - name: lineinfile > configure shell
+    ansible.builtin.lineinfile:
+      path:   "{{ cron.configuration }}"
+      line:   "SHELL={{ default_cron.shell }}"
+      regexp: "^SHELL"
+      create: yes
+      mode:   "0600"
+    notify: restart cron
 
-- name: Configuring cron variables
-  cronvar:
-    name: "{{ item.name | default(omit) }}"
-    value: "{{ item.value | default(omit) }}"
-    state: "{{ item.state | default(omit) }}"
-    cron_file: "{{ item.cron_file | default(omit) }}"
-    backup: "{{ item.backup | default(omit) }}"
-    insertafter: "{{ item.insertafter | default(omit) }}"
-    insertbefore: "{{ item.insertbefore | default(omit) }}"
-    user: "{{ item.user | default(omit) }}"
-  with_items: "{{ cron_vars }}"
+  - name: configure path
+    ansible.builtin.lineinfile:
+      path:   "{{ cron.configuration }}"
+      line:   "PATH={{ default_cron.path }}"
+      regexp: "^PATH"
+      create: yes
+      mode:   "0600"
+    notify: restart cron
+
+  - name: Configure mailto
+    ansible.builtin.lineinfile:
+      path: "{{ cron.configuration }}"
+      line: "MAILTO={{ default_cron.mailto }}"
+      regexp: "^MAILTO"
+      create: yes
+      mode: "0600"
+    notify:
+      - restart cron
+## fin template
+
+  become: yes
+  tags: cron_config
