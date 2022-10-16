@@ -1,0 +1,39 @@
+
+- block:
+  - include: debian.yml
+
+  - include: centos.yml
+
+  - name: cron > insert crons
+    cron:
+      name:       "{{ item.name }}"
+      user:       "{{ item.user }}"
+      job:        "{{ item.job }}"
+      minute:     "{{ item.minute | default('*') }}"
+      hour:       "{{ item.hour | default('*') }}"
+      day:        "{{ item.day | default('*') }}"
+      month:      "{{ item.month | default('*') }}"
+      weekday:    "{{ item.weekday | default('*') }}"
+      disabled:   "{{ item.disabled | default('no') }}"
+      state:      "{{ item.state | default('present') }}"
+      cron_file:  "{{ item.cron_file | default('ecritel') }}"
+    loop: "{{ cron_list }}"
+    loop_control:
+      label: "{{ item.name }}"
+    when:
+      - cron_list is defined
+      - cron_list | length > 0
+
+  - name: template > copy needed script files
+    template:
+      src:    "{{ item.src }}.j2"
+      dest:   "/{{ item.dest }}"
+      owner:  "{{ item.owner | default('root') }}"
+      group:  "{{ item.group | default('root') }}"
+      mode:   "{{ item.mode  | default('0750') }}"
+    loop: "{{ cron_files }}"
+    when:
+      - cron_files is defined
+      - cron_files | length > 0
+
+  tags: cron

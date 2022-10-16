@@ -1,0 +1,14 @@
+
+- block:
+  - name: apt > ensure cron is installed
+    apt:
+      name:  cron
+      state: present
+
+  - name: service > ensure cron service is running
+    service:
+      name:  cron
+      state: started
+
+  become: yes
+  when: ansible_distribution|lower == "debian"
