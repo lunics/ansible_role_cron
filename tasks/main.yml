@@ -1,8 +1,6 @@
 
 - block:
-  - include: debian.yml
-
-  - include: centos.yml
+  - include_tasks: "{{ ansible_os_family }}.yml"
 
   - name: cron > insert crons
     cron:
@@ -36,4 +34,32 @@
       - cron_files is defined
       - cron_files | length > 0
 
+  # buluma/ansible-role-cron
+  - import_tasks: vars.yml
+    tags:
+      - system
+      - cron
+      - vars
+      - cron-vars
+
+  - import_tasks: install.yml
+    tags:
+      - system
+      - cron
+      - install
+      - cron-install
+
+  - import_tasks: config.yml
+    tags:
+      - system
+      - cron
+      - config
+      - cron-config
+
+  - import_tasks: service.yml
+    tags:
+      - system
+      - cron
+      - service
+      - cron-service
   tags: cron
