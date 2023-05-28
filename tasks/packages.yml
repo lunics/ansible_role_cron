@@ -1,4 +1,3 @@
-
 - block:
   - name: package > install cron packages
     ansible.builtin.package:

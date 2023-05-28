@@ -1,3 +1,20 @@
+cron_jobs: []
+  # - name: description of the task
+  #   day:"1-15"          # for the first part of the month
+  #   hour:  23           # in the 23rd hour
+  #   job:  ls -l         # run this command
+  #   minute: "*/10"      # every 10 minutes
+  #   user: root          # for a specific user
+  #   cron_file:
+  #   month:
+  #   weekday:
+  #   special_time:
+  #   state:
+
+cron_vars: []
+  # - name: 'PATH'
+  #   value: '/usr/bin:/bin:/usr/local/bin'
+  #   user: 'root'
 
 default_cron:
   service_enabled: yes

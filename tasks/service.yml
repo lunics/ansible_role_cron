@@ -1,4 +1,3 @@
-
 - block:
   - name: systemd > ensuring unmasked service
     ansible.builtin.systemd:

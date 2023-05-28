@@ -1,16 +1,13 @@
-
 - block:
-  - name: import_task > assert.yml
-    ansible.builtin.import_tasks: assert.yml
-    run_once: yes
-    delegate_to: localhost
+  - ansible.builtin.import_tasks: assert.yml
 
-  - import_tasks: install.yml
+  - ansible.builtin.import_tasks: packages.yml
 
-  - import_tasks: config.yml
+  - ansible.builtin.import_tasks: config.yml
 
-  - import_tasks: service.yml
+  - ansible.builtin.import_tasks: service.yml
 
-  - import_tasks: cron_jobs.yml
+  - ansible.builtin.import_tasks: cron_jobs.yml
 
+  become: true
   tags: cron

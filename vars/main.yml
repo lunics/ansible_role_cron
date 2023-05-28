@@ -1,4 +1,3 @@
-
 _cron:
   packages:
     default:
@@ -25,30 +24,3 @@ cron:
   packages:      "{{ _cron.packages[ansible_os_family]      | default(_cron.packages['default'] )      }}"
   service:       "{{ _cron.service[ansible_os_family]       | default(_cron.service['default'] )       }}"
   configuration: "{{ _cron.configuration[ansible_os_family] | default(_cron.configuration['default'] ) }}"
-
-cron_jobs:
-  - name:   do something nooo
-    day:    "1-15"
-    hour:   13
-    job:    "ls -la"
-    minute: "*/10"
-    user:   "{{ user.1.name }}"
-    state: absent
-
-  # - name:
-  #   day:
-  #   hour:
-  #   job:
-  #   minute:
-  #   user:
-  #   cron_file:
-  #   state:
-  #   month:
-  #   special_time:
-  #   state:
-  #   weekday:
-
-cron_vars: []
-#   - name: 'PATH'
-#     value: '/usr/bin:/bin:/usr/local/bin'
-#     user: 'root'

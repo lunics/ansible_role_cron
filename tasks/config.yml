@@ -1,4 +1,3 @@
-
 - block:
 ## remplacer par un template
   - name: lineinfile > configure shell
@@ -8,7 +7,7 @@
       regexp: "^SHELL"
       create: yes
       mode:   "0600"
-    notify: restart cron
+    notify: "handler | service > restart cron"
 
   - name: configure path
     ansible.builtin.lineinfile:
@@ -17,7 +16,7 @@
       regexp: "^PATH"
       create: yes
       mode:   "0600"
-    notify: restart cron
+    notify: "handler | service > restart cron"
 
   - name: Configure mailto
     ansible.builtin.lineinfile:
@@ -26,8 +25,7 @@
       regexp: "^MAILTO"
       create: yes
       mode: "0600"
-    notify:
-      - restart cron
+    notify: "handler | service > restart cron"
 ## fin template
 
   become: yes
