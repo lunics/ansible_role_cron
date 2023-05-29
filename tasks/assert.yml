@@ -1,27 +1,27 @@
 - block:
-  - name: assert > test if default_cron.shell is set correctly
-    ansible.builtin.assert:
+  - name: assert > test if cron_shell is set correctly
+    assert:
       that:
-        - default_cron.shell is defined
-        - default_cron.shell is string
+        - cron_shell is defined
+        - cron_shell is string
       quiet: yes
 
-  - name: assert > test if default_cron.path is set correctly
-    ansible.builtin.assert:
+  - name: assert > test if cron_path_env is set correctly
+    assert:
       that:
-        - default_cron.path is defined
-        - default_cron.path is string
+        - cron_path_env is defined
+        - cron_path_env is string
       quiet: yes
 
-  - name: assert > test if default_cron.mailto is set correctly
-    ansible.builtin.assert:
+  - name: assert > test if cron_mailto is set correctly
+    assert:
       that:
-        - default_cron.mailto is defined
-        - default_cron.mailto is string
+        - cron_mailto is defined
+        - cron_mailto is string
       quiet: yes
 
   - name: assert > test if cron_jobs is set correctly
-    ansible.builtin.assert:
+    assert:
       that:
         - cron_jobs is iterable
       quiet: yes
@@ -29,7 +29,7 @@
       - cron_jobs is defined
 
   - name: assert > test if item in cron_jobs is set correctly
-    ansible.builtin.assert:
+    assert:
       that:
         - item.name is defined
         - item.name is string
@@ -43,7 +43,7 @@
       - cron_jobs is defined
 
   - name: assert > test if item.minute is set correctly
-    ansible.builtin.assert:
+    assert:
       that:
         - item.minute >= 0
         - item.minute <= 59
@@ -52,12 +52,12 @@
     loop_control:
       label: "{{ item.name }}"
     when:
-      - cron_jobs is defined
+      - cron_jobs   is defined
       - item.minute is defined
       - item.minute is number
 
   - name: assert > test if item.hour is set correctly
-    ansible.builtin.assert:
+    assert:
       that:
         - item.hour >= 0
         - item.hour <= 23
@@ -71,7 +71,7 @@
       - item.hour is number
 
   - name: assert > test if item.weekday is set correctly
-    ansible.builtin.assert:
+    assert:
       that:
         - item.weekday >= 0
         - item.weekday <= 6
@@ -80,7 +80,7 @@
     loop_control:
       label: "{{ item.name }}"
     when:
-      - cron_jobs is defined
+      - cron_jobs    is defined
       - item.weekday is defined
       - item.weekday is number
 

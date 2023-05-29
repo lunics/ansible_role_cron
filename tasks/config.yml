@@ -1,7 +1,7 @@
 - block:
 ## remplacer par un template
   - name: lineinfile > configure shell
-    ansible.builtin.lineinfile:
+    lineinfile:
       path:   "{{ cron.configuration }}"
       line:   "SHELL={{ default_cron.shell }}"
       regexp: "^SHELL"
@@ -10,7 +10,7 @@
     notify: "handler | service > restart cron"
 
   - name: configure path
-    ansible.builtin.lineinfile:
+    lineinfile:
       path:   "{{ cron.configuration }}"
       line:   "PATH={{ default_cron.path }}"
       regexp: "^PATH"
@@ -19,7 +19,7 @@
     notify: "handler | service > restart cron"
 
   - name: Configure mailto
-    ansible.builtin.lineinfile:
+    lineinfile:
       path: "{{ cron.configuration }}"
       line: "MAILTO={{ default_cron.mailto }}"
       regexp: "^MAILTO"
@@ -28,5 +28,4 @@
     notify: "handler | service > restart cron"
 ## fin template
 
-  become: yes
   tags: cron_config

@@ -7,16 +7,14 @@
       day:          "{{ item.day          | default(omit) }}"
       month:        "{{ item.month        | default(omit) }}"
       weekday:      "{{ item.weekday      | default(omit) }}"
-      job:          "{{ item.job                          }}"
+      job:          "{{ item.job          }}"
       state:        "{{ item.state        | default('present') }}"
       user:         "{{ item.user         | default(omit) }}"
       cron_file:    "{{ item.cron_file    | default(omit) }}"
       special_time: "{{ item.special_time | default(omit) }}"
       disabled:     "{{ item.disabled     | default(omit) }}"
     with_items: "{{ cron_jobs }}"
-    when:
-      - cron_jobs is defined
-      - cron_jobs | length > 0
+    when: cron_jobs | length
 
   - name: Configuring cron variables
     cronvar:
@@ -29,7 +27,7 @@
       insertbefore: "{{ item.insertbefore | default(omit) }}"
       user:         "{{ item.user         | default(omit) }}"
     with_items: "{{ cron_vars }}"
-    when: cron_vars is defined
+    when: cron_vars | length
 
   - name: template > generate needed script files
     template:
@@ -39,9 +37,6 @@
       group: "{{ item.group | default('root') }}"
       mode:  "{{ item.mode  | default('0750') }}"
     loop: "{{ cron_files }}"
-    when:
-      - cron_files is defined
-      - cron_files | length > 0
+    when: cron_files | length
 
-  become: yes
   tags: cron_jobs

@@ -1,10 +1,10 @@
 cron_jobs: []
-  # - name: description of the task
-  #   day:"1-15"          # for the first part of the month
-  #   hour:  23           # in the 23rd hour
-  #   job:  ls -l         # run this command
-  #   minute: "*/10"      # every 10 minutes
-  #   user: root          # for a specific user
+  # - name:       description of the task
+  #   day:        1-15          # for the first part of the month
+  #   hour:       23            # in the 23rd hour
+  #   job:        ls -l         # run this command
+  #   minute:     "*/10"        # every 10 minutes
+  #   user:       root          # for a specific user
   #   cron_file:
   #   month:
   #   weekday:
@@ -12,13 +12,12 @@ cron_jobs: []
   #   state:
 
 cron_vars: []
-  # - name: 'PATH'
-  #   value: '/usr/bin:/bin:/usr/local/bin'
-  #   user: 'root'
+  # - name:   PATH
+  #   value:  /usr/bin:/bin:/usr/local/bin
+  #   user:   root
 
-default_cron:
-  service_enabled: yes
-  service_state:   started
-  shell:           /bin/bash                        # the shell to use for running cronjobs
-  path:            /sbin:/bin:/usr/sbin:/usr/bin    # the path to set for running jobs
-  mailto:          root                             # the address where mails should be sent to
+cron_service_state:   started
+cron_service_enabled: yes
+cron_shell:           /bin/bash                        # the shell to use for running cronjobs
+cron_path_env:        /sbin:/bin:/usr/sbin:/usr/bin    # the $PATH env variable to set for running jobs
+cron_mailto:          root                             # the address where mails should be sent to

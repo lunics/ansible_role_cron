@@ -1,13 +1,14 @@
 - block:
-  - ansible.builtin.import_tasks: assert.yml
+  - import_tasks: assert.yml
 
-  - ansible.builtin.import_tasks: packages.yml
+  - import_tasks: packages.yml
 
-  - ansible.builtin.import_tasks: config.yml
+  - import_tasks: config.yml
 
-  - ansible.builtin.import_tasks: service.yml
+  - import_tasks: service.yml
 
-  - ansible.builtin.import_tasks: cron_jobs.yml
+  - import_tasks: cron_jobs.yml
 
+  become_user: root
   become: true
   tags: cron

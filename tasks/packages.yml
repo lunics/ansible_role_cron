@@ -1,6 +1,6 @@
 - block:
   - name: package > install cron packages
-    ansible.builtin.package:
+    package:
       name: "{{ cron.packages }}"
       state: present
 

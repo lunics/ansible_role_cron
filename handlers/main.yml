@@ -5,4 +5,4 @@
   when:
     - cron.service | length
     - not ansible_check_mode
-    - default_cron.service_state != 'stopped'
+    - cron_service_state != "stopped"
