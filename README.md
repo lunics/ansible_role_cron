@@ -1,10 +1,10 @@
 # Ansible role: CRON
 
-Install and deploy cron jobs and cron vars
+Install and deploy cron jobs and cron vars.
 
-A copy of [robertdebock/ansible-role-cron](https://github.com/robertdebock/ansible-role-cron)
+A copy of [robertdebock/ansible-role-cron](https://github.com/robertdebock/ansible-role-cron).
 
-Only available on Archlinux
+Only available on Archlinux.
 
 ## Usage
 ```yaml
