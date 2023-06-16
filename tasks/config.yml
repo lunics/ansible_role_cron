@@ -1,5 +1,5 @@
 - block:
-## remplacer par un template
+## remplace by template
   - name: lineinfile > configure shell
     lineinfile:
       path:   "{{ cron.configuration }}"
@@ -26,6 +26,6 @@
       create: yes
       mode: "0600"
     notify: "handler | service > restart cron"
-## fin template
+## end template
 
   tags: cron_config

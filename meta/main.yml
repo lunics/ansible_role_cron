@@ -2,7 +2,7 @@ galaxy_info:
   role_name:    cron
   author:       lunics
   description:  A role to install cron tasks and cron vars
-  license:      GPL-3.0
+  license:      Apache-2.0
   company:      none
   min_ansible_version: 2.1
   platforms:
