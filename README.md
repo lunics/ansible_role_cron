@@ -4,9 +4,10 @@ Install and deploy cron jobs and cron vars.
 
 A copy of [robertdebock/ansible-role-cron](https://github.com/robertdebock/ansible-role-cron).
 
-Only available on Archlinux.
+Only tested on Archlinux.
 
 ## Usage
+Override [defaults](https://github.com/lunics/ansible_role_cron/blob/main/defaults/main.yml)
 ```yaml
 cron_jobs: []
   - name:       description of the task
@@ -20,10 +21,10 @@ cron_jobs: []
     weekday:
     special_time:
     state:
-
+```
+```yaml
 cron_vars: []
   - name:   PATH
     value:  /usr/bin:/bin:/usr/local/bin
     user:   root
-
 ```
