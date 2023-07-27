@@ -28,3 +28,6 @@ cron_vars: []
     value:  /usr/bin:/bin:/usr/local/bin
     user:   root
 ```
+TODO
+- replace tasks/config.yml lineinfile by templates
+- replace cron.packages by cron_packages
