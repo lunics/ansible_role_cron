@@ -1,0 +1,12 @@
+- name: cronvar > configuring cron variables
+  cronvar:
+    name:         "{{ item.name         | default(omit) }}"
+    value:        "{{ item.value        | default(omit) }}"
+    state:        "{{ item.state        | default(omit) }}"
+    cron_file:    "{{ item.cron_file    | default(omit) }}"
+    backup:       "{{ item.backup       | default(omit) }}"
+    insertafter:  "{{ item.insertafter  | default(omit) }}"
+    insertbefore: "{{ item.insertbefore | default(omit) }}"
+    user:         "{{ item.user         | default(omit) }}"
+  loop: "{{ cron_vars }}"
+  tags: cron_vars

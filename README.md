@@ -10,17 +10,12 @@ Only tested on Archlinux.
 Override [defaults](https://github.com/lunics/ansible_role_cron/blob/main/defaults/main.yml)
 ```yaml
 cron_jobs: []
-  - name:       description of the task
-    day:        1-15          # for the first part of the month
-    hour:       23            # in the 23rd hour
-    job:        ls -l         # run this command
-    minute:     "*/10"        # every 10 minutes
-    user:       root          # for a specific user
-    cron_file:
-    month:
-    weekday:
-    special_time:
-    state:
+  - name:   job title     # required, description of the job
+    job:    ls -l         # required, command ran
+    day:    1-15          # for the first part of the month
+    hour:   23            # in the 23rd hour
+    minute: "*/10"        # every 10 minutes
+    user:   root          # optional, default = root; job for a specific user
 ```
 ```yaml
 cron_vars: []
@@ -31,3 +26,4 @@ cron_vars: []
 TODO
 - replace tasks/config.yml lineinfile by templates
 - replace cron.packages by cron_packages
+- implement task/cron_jobs.yml:templatecron_files

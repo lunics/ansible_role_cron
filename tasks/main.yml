@@ -9,5 +9,7 @@
 
   - import_tasks: cron_jobs.yml
 
+  - import_tasks: cron_vars.yml
+
   become_user: root
   tags: cron
